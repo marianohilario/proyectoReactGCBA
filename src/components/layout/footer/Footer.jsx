@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import NosotrosList from "./nosotrosList/NosotrosList";
 import Loader from "../../Loader";
+import SocialNetworks from "../../socialNetworks/SocialNetworks";
+import styles from "./footer.module.css";
+import WhatsApp from "../../whatsApp/WhatsApp";
 const Footer = () => {
   const [nosotros, setNosotros] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,34 +25,19 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer
-      style={{
-        borderTop: "1px solid #cccccc80",
-        padding: "10px",
-        textAlign: "center",
-        marginTop: "20px",
-        color: "var(--text)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        minHeight: "234px",
-      }}
-    >
+    <footer className={styles.footer}>
       {loading ? (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flex: 1,
-          }}
-        >
+        <div className={styles.loaderWrapper}>
           <Loader height="50px" />
         </div>
       ) : (
         <NosotrosList nosotros={nosotros} />
       )}
-      <p style={{ fontSize: "13px" }}>&copy; 2026 - Mariano Hilario</p>
+      <div className={styles.footerBottom}>
+        <p className={styles.copyright}>&copy; 2026 - Mariano Hilario</p>
+        <SocialNetworks />
+      </div>
+      <WhatsApp />
     </footer>
   );
 };

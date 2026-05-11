@@ -1,0 +1,15 @@
+.socialNetworks {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.socialNetwork {
+  font-size: 14px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.socialNetwork:hover {
+  text-shadow: 0 0px 18px rgba(255, 255, 255, 0.8);
+}

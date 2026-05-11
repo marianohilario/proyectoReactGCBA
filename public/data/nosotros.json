@@ -1,0 +1,32 @@
+{
+  "nosotros": [
+    {
+      "id": 1,
+      "nombre": "Mariano Hilario",
+      "email": "mariano@mail.com",
+      "puesto": "CEO",
+      "foto": "https://randomuser.me/api/portraits/men/1.jpg"
+    },
+    {
+      "id": 2,
+      "nombre": "Lucía Gómez",
+      "email": "lucia@mail.com",
+      "puesto": "Desarrolladora Frontend",
+      "foto": "https://randomuser.me/api/portraits/women/1.jpg"
+    },
+    {
+      "id": 3,
+      "nombre": "Sofía Martínez",
+      "email": "sofia@mail.com",
+      "puesto": "Desarrolladora Backend",
+      "foto": "https://randomuser.me/api/portraits/women/2.jpg"
+    },
+    {
+      "id": 4,
+      "nombre": "Diego Fernández",
+      "email": "diego@mail.com",
+      "puesto": "CTO",
+      "foto": "https://randomuser.me/api/portraits/men/2.jpg"
+    }
+  ]
+}

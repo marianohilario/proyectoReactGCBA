@@ -13,16 +13,16 @@ const Loader = (props) => {
         display: "block",
         background: "transparent",
       }}
-      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
       {...props}
     >
       <g>
         <circle
-          stroke-linecap="round"
+          strokeLinecap="round"
           fill="none"
-          stroke-dasharray="50.26548245743669 50.26548245743669"
+          strokeDasharray="50.26548245743669 50.26548245743669"
           stroke="#cccccc"
-          stroke-width="8"
+          strokeWidth="8"
           r="32"
           cy="50"
           cx="50"
@@ -37,12 +37,12 @@ const Loader = (props) => {
           ></animateTransform>
         </circle>
         <circle
-          stroke-linecap="round"
+          strokeLinecap="round"
           fill="none"
-          stroke-dashoffset="36.12831551628262"
-          stroke-dasharray="36.12831551628262 36.12831551628262"
+          strokeDashoffset="36.12831551628262"
+          strokeDasharray="36.12831551628262 36.12831551628262"
           stroke="#eae6e2"
-          stroke-width="8"
+          strokeWidth="8"
           r="23"
           cy="50"
           cx="50"

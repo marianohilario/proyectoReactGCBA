@@ -4,16 +4,16 @@ const SocialNetworks = () => {
   return (
     <ul className={styles.socialNetworks}>
       <li className={styles.socialNetwork}>
-        <i class="bi bi-instagram"></i>
+        <i className="bi bi-instagram"></i>
       </li>
       <li className={styles.socialNetwork}>
-        <i class="bi bi-facebook"></i>
+        <i className="bi bi-facebook"></i>
       </li>
       <li className={styles.socialNetwork}>
-        <i class="bi bi-twitter"></i>
+        <i className="bi bi-twitter"></i>
       </li>
       <li className={styles.socialNetwork}>
-        <i class="bi bi-linkedin"></i>
+        <i className="bi bi-linkedin"></i>
       </li>
     </ul>
   );

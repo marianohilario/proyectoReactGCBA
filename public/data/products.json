@@ -5,21 +5,21 @@
       "nombre": "Mouse Apple",
       "precio": 100,
       "stock": 10,
-      "imagen": "../../src/assets/images/mouse.jpg"
+      "imagen": "/images/mouse.jpg"
     },
     {
       "id": 2,
       "nombre": "Teclado Apple",
       "precio": 200,
       "stock": 5,
-      "imagen": "../../src/assets/images/teclado.jpg"
+      "imagen": "/images/teclado.jpg"
     },
     {
       "id": 3,
       "nombre": "Macbook Pro",
       "precio": 300,
       "stock": 15,
-      "imagen": "../../src/assets/images/macbook-pro.jpg"
+      "imagen": "/images/macbook-pro.jpg"
     }
   ]
 }

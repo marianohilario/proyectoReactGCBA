@@ -7,7 +7,6 @@ const AddProductForm = ({
   setImagenFile,
   imagenFile,
 }) => {
-
   return (
     <form className={styles.formCard} onSubmit={manejarEnvio}>
       <div className={styles.formHeader}>
@@ -51,7 +50,7 @@ const AddProductForm = ({
           <label className={styles.label}>Imagen</label>
           <label htmlFor="inputImagen" className={styles.fileLabel}>
             <i className="bi bi-image"></i>
-            <span>{imagenFile?.name || "Elegir imagen desde archivo"}</span>
+            <span>{imagenFile?.name || "Elegir imagen..."}</span>
           </label>
           <input
             id="inputImagen"

@@ -28,7 +28,10 @@ const ProductsListContainer = () => {
       <Loader height="100px" />
     </div>
   ) : (
-    <ProductList products={products} />
+    <div className={styles.container}>
+      <h2 className={"title"}>Listado de Productos</h2>
+      <ProductList products={products} />
+    </div>
   );
 };
 

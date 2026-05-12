@@ -174,3 +174,10 @@
   background: #111113;
   box-shadow: 0 2px 8px rgba(28, 28, 30, 0.3);
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}

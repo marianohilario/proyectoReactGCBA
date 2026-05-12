@@ -109,3 +109,21 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+.title {
+  position: relative;
+  font-weight: 600;
+  font-size: 1.8rem;
+  color: var(--text);
+}
+
+.title::before {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 2px;
+  background-color: #c9a43a;
+}

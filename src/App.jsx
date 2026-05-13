@@ -1,21 +1,18 @@
-import { useState } from "react";
-import "./App.css";
-import Layout from "./components/layout/Layout";
-import ProductsListContainer from "./components/products/ProductsListContainer";
-import FormularioContainer from "./components/products/agregarProducto/formularioContainer/FormularioContainer";
 import { Route, Routes } from "react-router-dom";
-import NosotrosListContainer from "./components/nosotros/nosotrosListContainer/NosotrosListContainer";
+import Layout from "./components/layout/Layout";
+import Inicio from "./pages/Inicio";
+import Productos from "./pages/Productos";
+import NuevoProducto from "./pages/NuevoProducto";
+import Nosotros from "./pages/Nosotros";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<h1>Bienvenido a mi Ecommerce 👋🏼</h1>} />
-        <Route path="/productos" element={<ProductsListContainer />} />
-        <Route path="/nuevo-producto" element={<FormularioContainer />} />
-        <Route path="/nosotros" element={<NosotrosListContainer />} />
+        <Route path="/" element={<Inicio />} />
+        <Route path="/productos" element={<Productos />} />
+        <Route path="/nuevo-producto" element={<NuevoProducto />} />
+        <Route path="/nosotros" element={<Nosotros />} />
       </Route>
     </Routes>
   );

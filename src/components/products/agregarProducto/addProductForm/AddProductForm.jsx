@@ -6,6 +6,7 @@ const AddProductForm = ({
   datosForm,
   setImagenFile,
   imagenFile,
+  loadingImg,
 }) => {
   return (
     <form className={styles.formCard} onSubmit={manejarEnvio}>
@@ -61,8 +62,12 @@ const AddProductForm = ({
             onChange={(e) => setImagenFile(e.target.files[0])}
           />
         </div>
-        <button className={styles.submitBtn} type="submit">
-          Agregar Producto
+        <button
+          className={styles.submitBtn}
+          type="submit"
+          disabled={loadingImg}
+        >
+          {loadingImg ? "Cargando..." : "Agregar Producto"}
         </button>
       </div>
     </form>

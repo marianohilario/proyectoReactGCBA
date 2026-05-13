@@ -45,6 +45,7 @@ const FormularioContainer = () => {
       setImagenFile={setImagenFile}
       imagenFile={imagenFile}
       datosForm={datosForm}
+      loadingImg={loading}
     />
   );
 };

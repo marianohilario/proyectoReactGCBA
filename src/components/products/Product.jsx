@@ -1,11 +1,12 @@
 import { useState } from "react";
 import styles from "./products.module.css";
+import { Link } from "react-router-dom";
 
 const Product = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   return (
-    <div className={styles.productCard}>
+    <Link to={`/producto/${product.id}`} className={styles.productCard}>
       <div className={styles.imageContainer}>
         <div className={styles.imageOverlay} />
         <img
@@ -36,9 +37,11 @@ const Product = ({ product }) => {
           </span>
         </div>
 
-        <button className={styles.buyBtn}>Comprar</button>
+        <button type="button" className={styles.buyBtn}>
+          Comprar
+        </button>
       </div>
-    </div>
+    </Link>
   );
 };
 

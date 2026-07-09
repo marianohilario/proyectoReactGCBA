@@ -20,7 +20,7 @@ const FormularioContainer = () => {
 
   const manejarEnvio = async (evento) => {
     evento.preventDefault();
-    const apiKey = "fc5635c0f14bcd56f76fd0b365845ad4"; //  ¡Aquí va tu clave!
+    const apiKey = "fc5635c0f14bcd56f76fd0b365845ad4";
     const formData = new FormData();
     formData.append("image", imagenFile);
 

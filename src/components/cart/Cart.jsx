@@ -4,8 +4,13 @@ import QuantityStepper from "../quantityStepper/QuantityStepper";
 import styles from "./cart.module.css";
 
 const Cart = () => {
-  const { cartItems, updateQuantity, removeFromCart, clearCart, getTotalPrice } =
-    useCartContext();
+  const {
+    cartItems,
+    updateQuantity,
+    removeFromCart,
+    clearCart,
+    getTotalPrice,
+  } = useCartContext();
 
   if (cartItems.length === 0) {
     return (
@@ -28,11 +33,16 @@ const Cart = () => {
       <div className={styles.itemsList}>
         {cartItems.map((item) => (
           <div key={item.product.id} className={styles.cartItem}>
-            <img
-              src={item.product.imagen}
-              alt={item.product.nombre}
-              className={styles.itemImage}
-            />
+            <Link
+              to={`/producto/${item.product.id}`}
+              className={styles.itemLink}
+            >
+              <img
+                src={item.product.imagen}
+                alt={item.product.nombre}
+                className={styles.itemImage}
+              />
+            </Link>
             <div className={styles.itemInfo}>
               <h3 className={styles.itemName}>{item.product.nombre}</h3>
               <div className={styles.itemQuantityRow}>

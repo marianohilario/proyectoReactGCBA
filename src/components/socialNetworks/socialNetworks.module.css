@@ -1,7 +1,10 @@
 .socialNetworks {
+  width: 100%;
   display: flex;
-  gap: 15px;
+  gap: 20px;
   justify-content: center;
+  padding: 10px;
+  margin: 0;
 }
 
 .socialNetwork {

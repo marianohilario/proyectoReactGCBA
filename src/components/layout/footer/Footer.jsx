@@ -6,17 +6,7 @@ import styles from "./footer.module.css";
 const Footer = () => {
   return (
     <footer className={styles.footer}>
-      {/* {loading ? (
-        <div className={styles.loaderWrapper}>
-          <Loader height="50px" />
-        </div>
-      ) : (
-        <NosotrosList nosotros={nosotros} />
-      )} */}
-      <div className={styles.footerBottom}>
-        <p className={styles.copyright}>&copy; 2026 - Mariano Hilario</p>
-        <SocialNetworks />
-      </div>
+      <p className={styles.copyright}>&copy; 2026 - Mariano Hilario</p>
     </footer>
   );
 };

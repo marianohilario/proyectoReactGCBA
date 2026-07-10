@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import styles from "./sidebar.module.css";
+import SocialNetworks from "../../socialNetworks/SocialNetworks";
 
 const Sidebar = () => {
   const { pathname } = useLocation();
@@ -9,7 +10,11 @@ const Sidebar = () => {
 
   return (
     <aside className={styles.sidebar}>
-      <h1 className={styles.brand}>MH Ecommerce</h1>
+      <h1 className={styles.brand}>
+        <span className={"title"} style={{ fontSize: "1.3rem" }}>
+          MH Ecommerce
+        </span>
+      </h1>
       <nav>
         <ul className={styles.navList}>
           <li className={linkClass("/")}>
@@ -26,6 +31,9 @@ const Sidebar = () => {
           </li>
         </ul>
       </nav>
+      <div className={styles.sidebarFooter}>
+        <SocialNetworks />
+      </div>
     </aside>
   );
 };

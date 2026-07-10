@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import styles from "./products.module.css";
 import { Link } from "react-router-dom";
 import { useCartContext } from "../../context/CartContext";
@@ -17,6 +18,9 @@ const Product = ({ product }) => {
     evento.preventDefault();
     evento.stopPropagation();
     addToCart(product, cantidad);
+    toast.success(
+      itemEnCarrito > 0 ? "Cantidad actualizada" : "Producto agregado al carrito",
+    );
   };
 
   const disabled =

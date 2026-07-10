@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useCartContext } from "../../context/CartContext";
 import QuantityStepper from "../quantityStepper/QuantityStepper";
 import styles from "./cart.module.css";
@@ -11,6 +12,20 @@ const Cart = () => {
     clearCart,
     getTotalPrice,
   } = useCartContext();
+
+  const manejarVaciarCarrito = () => {
+    clearCart();
+    toast.info("Carrito vaciado");
+  };
+
+  const manejarEliminarProducto = (productId) => {
+    removeFromCart(productId);
+    toast.info("Producto eliminado del carrito");
+  };
+
+  const manejarFinalizarCompra = () => {
+    toast.success("¡Gracias por tu compra!");
+  };
 
   if (cartItems.length === 0) {
     return (
@@ -31,6 +46,14 @@ const Cart = () => {
       <h2 className={"title"}>Carrito de Compras</h2>
 
       <div className={styles.itemsList}>
+        <button
+          className={styles.clearBtn}
+          type="button"
+          style={{ width: "fit-content" }}
+          onClick={manejarVaciarCarrito}
+        >
+          Vaciar carrito
+        </button>
         {cartItems.map((item) => (
           <div key={item.product.id} className={styles.cartItem}>
             <Link
@@ -62,7 +85,7 @@ const Cart = () => {
             </div>
             <button
               className={styles.removeBtn}
-              onClick={() => removeFromCart(item.product.id)}
+              onClick={() => manejarEliminarProducto(item.product.id)}
               aria-label={`Quitar ${item.product.nombre} del carrito`}
             >
               <i className="bi bi-trash"></i>
@@ -75,9 +98,13 @@ const Cart = () => {
         <p className={styles.totalPrice}>
           Total: ${getTotalPrice().toFixed(2)}
         </p>
-        <button className={styles.clearBtn} onClick={clearCart}>
-          Vaciar carrito
-        </button>
+        <Link
+          to="/"
+          onClick={manejarFinalizarCompra}
+          className={styles.clearBtn}
+        >
+          Finalizar Compra
+        </Link>
       </div>
     </div>
   );

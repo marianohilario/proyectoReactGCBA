@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import Loader from "../Loader";
 import styles from "./products.module.css";
 import { useCartContext } from "../../context/CartContext";
@@ -55,13 +56,16 @@ const ProductoDetalle = () => {
     );
   }
 
+  const itemEnCarrito = getCantidadActual(producto.id);
+
   const manejarAgregarAlCarrito = (evento) => {
     evento.preventDefault();
     evento.stopPropagation();
     addToCart(producto, cantidad);
+    toast.success(
+      itemEnCarrito > 0 ? "Cantidad actualizada" : "Producto agregado al carrito",
+    );
   };
-
-  const itemEnCarrito = getCantidadActual(producto.id);
 
   const disabled =
     producto.stock === 0 ||

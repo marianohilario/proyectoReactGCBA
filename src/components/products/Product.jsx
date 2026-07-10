@@ -19,16 +19,6 @@ const Product = ({ product }) => {
     addToCart(product, cantidad);
   };
 
-  if (product.id === 1)
-    console.log(
-      "product: ",
-      product,
-      "cantidad: ",
-      cantidad,
-      "itemEnCarrito: ",
-      itemEnCarrito,
-    );
-
   const disabled =
     product.stock === 0 ||
     cantidad > product.stock ||

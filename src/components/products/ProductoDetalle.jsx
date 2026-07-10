@@ -62,15 +62,6 @@ const ProductoDetalle = () => {
   };
 
   const itemEnCarrito = getCantidadActual(producto.id);
-  if (producto.id === 1)
-    console.log(
-      "producto: ",
-      producto,
-      "cantidad: ",
-      cantidad,
-      "itemEnCarrito: ",
-      itemEnCarrito,
-    );
 
   const disabled =
     producto.stock === 0 ||

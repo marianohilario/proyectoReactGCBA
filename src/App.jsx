@@ -5,6 +5,7 @@ import Productos from "./pages/Productos";
 import NuevoProducto from "./pages/NuevoProducto";
 import Nosotros from "./pages/Nosotros";
 import ProductoDetalle from "./components/products/ProductoDetalle";
+import Cart from "./components/cart/Cart";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/productos" element={<Productos />} />
         <Route path="/nuevo-producto" element={<NuevoProducto />} />
         <Route path="/nosotros" element={<Nosotros />} />
+        <Route path="/carrito" element={<Cart />} />
       </Route>
     </Routes>
   );

@@ -38,7 +38,7 @@ const ProductsListContainer = ({ titulo, destacados }) => {
     </div>
   ) : (
     <div className={styles.container}>
-      <h2 className={"title"}>{titulo}</h2>
+      {/* <h2 className={"title"}>{titulo}</h2> */}
       <ProductList products={productosAMostrar} />
     </div>
   );

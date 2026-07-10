@@ -3,8 +3,14 @@ import { useCartContext } from "../../context/CartContext";
 import styles from "./cart.module.css";
 
 const Cart = () => {
-  const { cartItems, removeFromCart, clearCart, getTotalPrice } =
+  const { cartItems, updateQuantity, removeFromCart, clearCart, getTotalPrice } =
     useCartContext();
+
+  const manejarCambioCantidad = (evento, item) => {
+    const valor = Number(evento.target.value);
+    const maximo = item.product.stock || 1;
+    updateQuantity(item.product.id, Math.min(Math.max(valor, 1), maximo));
+  };
 
   if (cartItems.length === 0) {
     return (
@@ -34,9 +40,23 @@ const Cart = () => {
             />
             <div className={styles.itemInfo}>
               <h3 className={styles.itemName}>{item.product.nombre}</h3>
-              <p className={styles.itemQuantity}>
-                Cantidad: {item.quantity}
-              </p>
+              <div className={styles.itemQuantityRow}>
+                <label
+                  htmlFor={`cantidad-${item.product.id}`}
+                  className={styles.itemQuantityLabel}
+                >
+                  Cantidad
+                </label>
+                <input
+                  id={`cantidad-${item.product.id}`}
+                  type="number"
+                  min="1"
+                  max={item.product.stock}
+                  value={item.quantity}
+                  onChange={(evento) => manejarCambioCantidad(evento, item)}
+                  className={styles.itemQuantityInput}
+                />
+              </div>
               <p className={styles.itemSubtotal}>
                 Subtotal: ${(item.product.precio * item.quantity).toFixed(2)}
               </p>

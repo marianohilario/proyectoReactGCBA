@@ -44,6 +44,14 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const updateQuantity = (productId, quantity) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.product.id === productId ? { ...item, quantity } : item,
+      ),
+    );
+  };
+
   const removeFromCart = (productId) => {
     setCartItems((prevItems) =>
       prevItems.filter((item) => item.product.id !== productId),
@@ -70,6 +78,7 @@ export const CartProvider = ({ children }) => {
       value={{
         cartItems,
         addToCart,
+        updateQuantity,
         removeFromCart,
         clearCart,
         getTotalItems,

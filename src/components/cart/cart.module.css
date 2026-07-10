@@ -71,11 +71,46 @@
   color: #1a1a2e;
 }
 
-.itemQuantity,
 .itemSubtotal {
   margin: 0;
   font-size: 0.85rem;
   color: #666;
+}
+
+.itemQuantityRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.itemQuantityLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.itemQuantityInput {
+  width: 56px;
+  padding: 6px 6px;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: #1a1a2e;
+  background: #fafafa;
+  text-align: center;
+  outline: none;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.itemQuantityInput:focus {
+  border-color: #c9a43a;
+  box-shadow: 0 0 0 3px rgba(201, 164, 58, 0.15);
+  background: #fff;
 }
 
 .itemSubtotal {

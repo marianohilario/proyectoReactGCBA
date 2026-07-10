@@ -4,6 +4,7 @@ import styles from "./products.module.css";
 import { Link } from "react-router-dom";
 import { useCartContext } from "../../context/CartContext";
 import QuantityStepper from "../quantityStepper/QuantityStepper";
+import { formatearPrecio } from "../../utils/formatearPrecio";
 
 const Product = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -19,7 +20,9 @@ const Product = ({ product }) => {
     evento.stopPropagation();
     addToCart(product, cantidad);
     toast.success(
-      itemEnCarrito > 0 ? "Cantidad actualizada" : "Producto agregado al carrito",
+      itemEnCarrito > 0
+        ? "Cantidad actualizada"
+        : "Producto agregado al carrito",
     );
   };
 
@@ -27,6 +30,8 @@ const Product = ({ product }) => {
     product.stock === 0 ||
     cantidad > product.stock ||
     cantidad === itemEnCarrito;
+
+  console.log(product.imagen);
 
   return (
     <Link to={`/producto/${product.id}`} className={styles.productCard}>
@@ -60,7 +65,7 @@ const Product = ({ product }) => {
         <div className={styles.priceRow}>
           <span className={styles.priceCurrency}>$</span>
           <span className={styles.priceAmount}>
-            {product.precio.toFixed(2)}
+            {formatearPrecio(product.precio)}
           </span>
         </div>
 

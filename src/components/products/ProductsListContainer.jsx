@@ -2,26 +2,35 @@ import { useState, useEffect } from "react";
 import ProductList from "./ProductsList";
 import Loader from "../Loader";
 import styles from "./products.module.css";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase/config";
 
 const ProductsListContainer = ({ titulo, destacados }) => {
   const [products, setProducts] = useState([]);
   const [productosAMostrar, setProductosAMostrar] = useState([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      fetch("/data/products.json")
-        .then((response) => response.json())
-        .then((data) => {
-          setProducts(data.productos);
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {
-          setLoading(false);
+    const fetchProducts = async () => {
+      setLoading(true);
+      try {
+        const querySnapshot = await getDocs(collection(db, "productos"));
+        const productsData = querySnapshot.docs.map((doc) => {
+          console.log(doc.data());
+          return {
+            id: doc.id,
+            ...doc.data(),
+          };
         });
-    }, 1000);
+        setProducts(productsData);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   useEffect(() => {

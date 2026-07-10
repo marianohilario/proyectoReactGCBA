@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useCartContext } from "../../context/CartContext";
 import QuantityStepper from "../quantityStepper/QuantityStepper";
+import { formatearPrecio } from "../../utils/formatearPrecio";
 import styles from "./cart.module.css";
 
 const Cart = () => {
@@ -80,7 +81,8 @@ const Cart = () => {
                 />
               </div>
               <p className={styles.itemSubtotal}>
-                Subtotal: ${(item.product.precio * item.quantity).toFixed(2)}
+                Subtotal: $
+                {formatearPrecio(item.product.precio * item.quantity)}
               </p>
             </div>
             <button
@@ -96,7 +98,7 @@ const Cart = () => {
 
       <div className={styles.summary}>
         <p className={styles.totalPrice}>
-          Total: ${getTotalPrice().toFixed(2)}
+          Total: ${formatearPrecio(getTotalPrice())}
         </p>
         <Link
           to="/"

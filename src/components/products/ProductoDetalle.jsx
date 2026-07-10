@@ -5,6 +5,7 @@ import Loader from "../Loader";
 import styles from "./products.module.css";
 import { useCartContext } from "../../context/CartContext";
 import QuantityStepper from "../quantityStepper/QuantityStepper";
+import { formatearPrecio } from "../../utils/formatearPrecio";
 
 const ProductoDetalle = () => {
   const { id } = useParams();
@@ -89,7 +90,7 @@ const ProductoDetalle = () => {
           <div className={styles.priceRow}>
             <span className={styles.priceCurrency}>$</span>
             <span className={styles.priceAmount}>
-              {producto.precio.toFixed(2)}
+              {formatearPrecio(producto.precio)}
             </span>
           </div>
 

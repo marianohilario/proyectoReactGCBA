@@ -1,12 +1,11 @@
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  padding: 1rem;
-  background-color: var(--header-bg);
-  color: var(--text);
-}
-
-.title {
-  padding-left: 18px;
+  padding: 1rem 1.5rem;
+  background-color: #1c1c1e;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }

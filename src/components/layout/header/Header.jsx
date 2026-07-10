@@ -1,11 +1,10 @@
-import Navbar from "../navbar/Navbar";
+import CartIcon from "../../cart/CartIcon";
 import styles from "./header.module.css";
 
 const Header = () => {
   return (
     <header className={styles.header}>
-      <h1 className={styles.title}>Mi Ecommerce</h1>
-      <Navbar />
+      <CartIcon />
     </header>
   );
 };

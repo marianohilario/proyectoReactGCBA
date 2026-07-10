@@ -1,0 +1,40 @@
+.cartIcon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #2d2d2f;
+  color: #ffffff;
+  font-size: 1.2rem;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(28, 28, 30, 0.25);
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.cartIcon:hover {
+  background: #3e3e3d;
+  box-shadow: 0 6px 20px rgba(28, 28, 30, 0.4);
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 10px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #c9a43a;
+  color: #1c1c1e;
+  font-size: 0.625rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 2px #ffffff;
+}

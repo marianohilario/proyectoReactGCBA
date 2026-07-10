@@ -26,6 +26,13 @@
   position: relative;
 }
 
+@media (max-width: 480px) {
+  .productCard {
+    width: 100%;
+    max-width: 270px;
+  }
+}
+
 .productCard:hover {
   box-shadow:
     0 0 0 1.5px rgba(201, 164, 58, 0.35),
@@ -143,6 +150,43 @@
   color: #c9a43a;
   line-height: 1;
   letter-spacing: -0.03em;
+}
+
+/* ── Cantidad ── */
+.quantityRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.quantityLabel {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.quantityInput {
+  width: 56px;
+  padding: 8px 6px;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #1a1a2e;
+  background: #fafafa;
+  text-align: center;
+  outline: none;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.quantityInput:focus {
+  border-color: #c9a43a;
+  box-shadow: 0 0 0 3px rgba(201, 164, 58, 0.15);
+  background: #fff;
 }
 
 /* ── Buy button ── */

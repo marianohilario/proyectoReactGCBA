@@ -71,6 +71,11 @@ export const CartProvider = ({ children }) => {
     );
   };
 
+  const getCantidadActual = (productId) => {
+    const item = cartItems.find((item) => item.product.id === productId);
+    return item ? item.quantity : 0;
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -81,6 +86,7 @@ export const CartProvider = ({ children }) => {
         clearCart,
         getTotalItems,
         getTotalPrice,
+        getCantidadActual,
       }}
     >
       {children}

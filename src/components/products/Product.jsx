@@ -5,15 +5,11 @@ import { useCartContext } from "../../context/CartContext";
 
 const Product = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
-  const { cartItems, addToCart } = useCartContext();
+  const { addToCart, getCantidadActual } = useCartContext();
 
-  const itemEnCarrito = cartItems.find(
-    (item) => item.product.id === product.id,
-  );
+  const itemEnCarrito = getCantidadActual(product.id);
   const [cantidad, setCantidad] = useState(
-    itemEnCarrito
-      ? Math.min(itemEnCarrito.quantity, product.stock || 1)
-      : 1,
+    itemEnCarrito ? Math.min(itemEnCarrito, product.stock || 1) : 1,
   );
 
   const manejarCambioCantidad = (evento) => {

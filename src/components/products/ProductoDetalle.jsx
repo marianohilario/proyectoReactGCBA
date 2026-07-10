@@ -61,6 +61,22 @@ const ProductoDetalle = () => {
     addToCart(producto, cantidad);
   };
 
+  const itemEnCarrito = getCantidadActual(producto.id);
+  if (producto.id === 1)
+    console.log(
+      "producto: ",
+      producto,
+      "cantidad: ",
+      cantidad,
+      "itemEnCarrito: ",
+      itemEnCarrito,
+    );
+
+  const disabled =
+    producto.stock === 0 ||
+    cantidad > producto.stock ||
+    cantidad === itemEnCarrito;
+
   return (
     <div className={styles.container}>
       <div className={styles.detalleCard}>
@@ -102,8 +118,13 @@ const ProductoDetalle = () => {
             Stock disponible: {producto.stock}
           </p>
 
-          <button className={styles.buyBtn} onClick={manejarAgregarAlCarrito}>
-            Agregar
+          <button
+            className={styles.buyBtn + " " + (disabled ? styles.disabled : "")}
+            onClick={manejarAgregarAlCarrito}
+            disabled={disabled}
+            aria-label="Agregar al carrito"
+          >
+            {itemEnCarrito > 0 ? "Modificar cantidad" : "Agregar al carrito"}
           </button>
         </div>
       </div>

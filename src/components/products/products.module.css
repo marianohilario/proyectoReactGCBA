@@ -28,6 +28,7 @@
   flex-direction: column;
   transition: box-shadow 0.35s ease;
   position: relative;
+  text-decoration: none;
 }
 
 @media (max-width: 480px) {
@@ -172,27 +173,6 @@
   text-transform: uppercase;
 }
 
-.quantityInput {
-  width: 56px;
-  padding: 8px 6px;
-  border: 1.5px solid rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  font-size: 0.9rem;
-  color: #1a1a2e;
-  background: #fafafa;
-  text-align: center;
-  outline: none;
-  transition:
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.quantityInput:focus {
-  border-color: #c9a43a;
-  box-shadow: 0 0 0 3px rgba(201, 164, 58, 0.15);
-  background: #fff;
-}
-
 /* ── Buy button ── */
 .buyBtn {
   margin-top: auto;
@@ -205,7 +185,7 @@
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.04em;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   cursor: pointer;
   transition:
     background 0.25s ease,
@@ -221,6 +201,13 @@
 .buyBtn:active {
   background: #111113;
   box-shadow: 0 2px 8px rgba(28, 28, 30, 0.3);
+}
+
+.buyBtn.disabled {
+  background: #1c1c1e80;
+  color: #ffffff80;
+  cursor: default;
+  box-shadow: 0 4px 14px rgba(28, 28, 30, 0.25);
 }
 
 .container {

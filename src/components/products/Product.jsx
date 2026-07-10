@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./products.module.css";
 import { Link } from "react-router-dom";
 import { useCartContext } from "../../context/CartContext";
+import QuantityStepper from "../quantityStepper/QuantityStepper";
 
 const Product = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -12,19 +13,26 @@ const Product = ({ product }) => {
     itemEnCarrito ? Math.min(itemEnCarrito, product.stock || 1) : 1,
   );
 
-  const manejarCambioCantidad = (evento) => {
-    evento.preventDefault();
-    evento.stopPropagation();
-    const valor = Number(evento.target.value);
-    const maximo = product.stock || 1;
-    setCantidad(Math.min(Math.max(valor, 1), maximo));
-  };
-
   const manejarAgregarAlCarrito = (evento) => {
     evento.preventDefault();
     evento.stopPropagation();
     addToCart(product, cantidad);
   };
+
+  if (product.id === 1)
+    console.log(
+      "product: ",
+      product,
+      "cantidad: ",
+      cantidad,
+      "itemEnCarrito: ",
+      itemEnCarrito,
+    );
+
+  const disabled =
+    product.stock === 0 ||
+    cantidad > product.stock ||
+    cantidad === itemEnCarrito;
 
   return (
     <Link to={`/producto/${product.id}`} className={styles.productCard}>
@@ -69,29 +77,23 @@ const Product = ({ product }) => {
             evento.stopPropagation();
           }}
         >
-          <label
-            htmlFor={`cantidad-${product.id}`}
-            className={styles.quantityLabel}
-          >
-            Cantidad
-          </label>
-          <input
-            id={`cantidad-${product.id}`}
-            type="number"
-            min="1"
-            max={product.stock}
+          <span className={styles.quantityLabel}>Cantidad</span>
+          <QuantityStepper
             value={cantidad}
-            onChange={manejarCambioCantidad}
-            className={styles.quantityInput}
+            min={1}
+            max={product.stock}
+            onChange={setCantidad}
           />
         </div>
 
         <button
           type="button"
-          className={styles.buyBtn}
+          className={styles.buyBtn + " " + (disabled ? styles.disabled : "")}
           onClick={manejarAgregarAlCarrito}
+          aria-label={`Agregar ${cantidad} de ${product.nombre} al carrito`}
+          disabled={disabled}
         >
-          Agregar
+          {itemEnCarrito > 0 ? "Modificar cantidad" : "Agregar al carrito"}
         </button>
       </div>
     </Link>

@@ -1,16 +1,11 @@
 import { Link } from "react-router-dom";
 import { useCartContext } from "../../context/CartContext";
+import QuantityStepper from "../quantityStepper/QuantityStepper";
 import styles from "./cart.module.css";
 
 const Cart = () => {
   const { cartItems, updateQuantity, removeFromCart, clearCart, getTotalPrice } =
     useCartContext();
-
-  const manejarCambioCantidad = (evento, item) => {
-    const valor = Number(evento.target.value);
-    const maximo = item.product.stock || 1;
-    updateQuantity(item.product.id, Math.min(Math.max(valor, 1), maximo));
-  };
 
   if (cartItems.length === 0) {
     return (
@@ -41,20 +36,14 @@ const Cart = () => {
             <div className={styles.itemInfo}>
               <h3 className={styles.itemName}>{item.product.nombre}</h3>
               <div className={styles.itemQuantityRow}>
-                <label
-                  htmlFor={`cantidad-${item.product.id}`}
-                  className={styles.itemQuantityLabel}
-                >
-                  Cantidad
-                </label>
-                <input
-                  id={`cantidad-${item.product.id}`}
-                  type="number"
-                  min="1"
-                  max={item.product.stock}
+                <span className={styles.itemQuantityLabel}>Cantidad</span>
+                <QuantityStepper
                   value={item.quantity}
-                  onChange={(evento) => manejarCambioCantidad(evento, item)}
-                  className={styles.itemQuantityInput}
+                  min={1}
+                  max={item.product.stock}
+                  onChange={(nuevaCantidad) =>
+                    updateQuantity(item.product.id, nuevaCantidad)
+                  }
                 />
               </div>
               <p className={styles.itemSubtotal}>

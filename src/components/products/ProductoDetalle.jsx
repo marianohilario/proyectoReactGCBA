@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Loader from "../Loader";
 import styles from "./products.module.css";
 import { useCartContext } from "../../context/CartContext";
+import QuantityStepper from "../quantityStepper/QuantityStepper";
 
 const ProductoDetalle = () => {
   const { id } = useParams();
@@ -54,14 +55,6 @@ const ProductoDetalle = () => {
     );
   }
 
-  const manejarCambioCantidad = (evento) => {
-    evento.preventDefault();
-    evento.stopPropagation();
-    const valor = Number(evento.target.value);
-    const maximo = producto.stock || 1;
-    setCantidad(Math.min(Math.max(valor, 1), maximo));
-  };
-
   const manejarAgregarAlCarrito = (evento) => {
     evento.preventDefault();
     evento.stopPropagation();
@@ -96,20 +89,12 @@ const ProductoDetalle = () => {
               evento.stopPropagation();
             }}
           >
-            <label
-              htmlFor={`cantidad-${producto.id}`}
-              className={styles.quantityLabel}
-            >
-              Cantidad
-            </label>
-            <input
-              id={`cantidad-${producto.id}`}
-              type="number"
-              min="1"
-              max={producto.stock}
+            <span className={styles.quantityLabel}>Cantidad</span>
+            <QuantityStepper
               value={cantidad}
-              onChange={manejarCambioCantidad}
-              className={styles.quantityInput}
+              min={1}
+              max={producto.stock}
+              onChange={setCantidad}
             />
           </div>
 

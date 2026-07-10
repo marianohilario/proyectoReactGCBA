@@ -1,12 +1,14 @@
 .mainLayout {
   position: relative;
   display: flex;
-  min-height: 100svh;
+  height: 100svh;
 }
 
 .contentArea {
   flex: 1;
   min-width: 0;
+  height: 100%;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }

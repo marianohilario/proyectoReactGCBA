@@ -34,9 +34,7 @@ export const CartProvider = ({ children }) => {
     );
     if (existingItem) {
       const updatedItems = cartItems.map((item) =>
-        item.product.id === product.id
-          ? { ...item, quantity: item.quantity + quantity }
-          : item,
+        item.product.id === product.id ? { ...item, quantity } : item,
       );
       setCartItems(updatedItems);
     } else {

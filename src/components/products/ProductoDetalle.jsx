@@ -10,7 +10,7 @@ const ProductoDetalle = () => {
   const [cantidad, setCantidad] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  const { addToCart } = useCartContext();
+  const { cartItems, addToCart } = useCartContext();
 
   useEffect(() => {
     setLoading(true);
@@ -29,6 +29,18 @@ const ProductoDetalle = () => {
         setLoading(false);
       });
   }, [id]);
+
+  useEffect(() => {
+    if (!producto) return;
+    const itemEnCarrito = cartItems.find(
+      (item) => item.product.id === producto.id,
+    );
+    setCantidad(
+      itemEnCarrito
+        ? Math.min(itemEnCarrito.quantity, producto.stock || 1)
+        : 1,
+    );
+  }, [producto]);
 
   if (loading) {
     return (

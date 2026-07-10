@@ -2,11 +2,15 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "../Loader";
 import styles from "./products.module.css";
+import { useCartContext } from "../../context/CartContext";
 
 const ProductoDetalle = () => {
   const { id } = useParams();
   const [producto, setProducto] = useState(null);
+  const [cantidad, setCantidad] = useState(1);
   const [loading, setLoading] = useState(true);
+
+  const { addToCart } = useCartContext();
 
   useEffect(() => {
     setLoading(true);
@@ -42,6 +46,20 @@ const ProductoDetalle = () => {
     );
   }
 
+  const manejarCambioCantidad = (evento) => {
+    evento.preventDefault();
+    evento.stopPropagation();
+    const valor = Number(evento.target.value);
+    const maximo = producto.stock || 1;
+    setCantidad(Math.min(Math.max(valor, 1), maximo));
+  };
+
+  const manejarAgregarAlCarrito = (evento) => {
+    evento.preventDefault();
+    evento.stopPropagation();
+    addToCart(producto, cantidad);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.detalleCard}>
@@ -63,11 +81,37 @@ const ProductoDetalle = () => {
             </span>
           </div>
 
+          <div
+            className={styles.quantityRow}
+            onClick={(evento) => {
+              evento.preventDefault();
+              evento.stopPropagation();
+            }}
+          >
+            <label
+              htmlFor={`cantidad-${producto.id}`}
+              className={styles.quantityLabel}
+            >
+              Cantidad
+            </label>
+            <input
+              id={`cantidad-${producto.id}`}
+              type="number"
+              min="1"
+              max={producto.stock}
+              value={cantidad}
+              onChange={manejarCambioCantidad}
+              className={styles.quantityInput}
+            />
+          </div>
+
           <p className={styles.detalleStock}>
             Stock disponible: {producto.stock}
           </p>
 
-          <button className={styles.buyBtn}>Comprar</button>
+          <button className={styles.buyBtn} onClick={manejarAgregarAlCarrito}>
+            Agregar
+          </button>
         </div>
       </div>
     </div>

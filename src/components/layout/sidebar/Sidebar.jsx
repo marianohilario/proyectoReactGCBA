@@ -24,7 +24,7 @@ const Sidebar = () => {
             <Link to="/productos">Productos</Link>
           </li>
           <li className={linkClass("/nuevo-producto")}>
-            <Link to="/nuevo-producto">Nuevo Producto</Link>
+            <Link to="/nuevo-producto">Gestión Productos</Link>
           </li>
           <li className={linkClass("/nosotros")}>
             <Link to="/nosotros">Nosotros</Link>

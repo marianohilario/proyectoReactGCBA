@@ -1,7 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddProductForm from "../addProductForm/AddProductForm";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { toast } from "react-toastify";
+import { db } from "../../../../firebase/config";
+
+import styles from "./formularioContainer.module.css";
+import { formatearPrecio } from "../../../../utils/formatearPrecio";
 
 const FormularioContainer = () => {
   const [loading, setLoading] = useState(false);
@@ -12,6 +23,26 @@ const FormularioContainer = () => {
     imagen: "",
   });
   const [imagenFile, setImagenFile] = useState(null);
+  const [productos, setProductos] = useState([]);
+
+  useEffect(() => {
+    const fetchProductos = async () => {
+      try {
+        const db = getFirestore();
+        const productosCollection = collection(db, "productos");
+        const snapshot = await getDocs(productosCollection);
+        const productosData = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setProductos(productosData);
+      } catch (error) {
+        console.error("Error al obtener los productos:", error);
+      }
+    };
+
+    fetchProductos();
+  }, []);
 
   const manejarCambio = (evento) => {
     setDatosForm({
@@ -23,27 +54,38 @@ const FormularioContainer = () => {
   const manejarEnvio = async (evento) => {
     evento.preventDefault();
     setLoading(true);
-    const apiKey = "fc5635c0f14bcd56f76fd0b365845ad4";
-    const formData = new FormData();
-    formData.append("image", imagenFile);
+    let urlImagen;
+    if (imagenFile) {
+      const apiKey = "fc5635c0f14bcd56f76fd0b365845ad4";
+      const formData = new FormData();
+      formData.append("image", imagenFile);
 
-    const respuesta = await fetch(
-      `https://api.imgbb.com/1/upload?key=${apiKey}`,
-      {
-        method: "POST",
-        body: formData,
-      },
-    );
-    const imgbbData = await respuesta.json();
-    const urlImagen = imgbbData.data.url;
+      const respuesta = await fetch(
+        `https://api.imgbb.com/1/upload?key=${apiKey}`,
+        {
+          method: "POST",
+          body: formData,
+        },
+      );
+      const imgbbData = await respuesta.json();
+      urlImagen = imgbbData.data.url;
+    }
 
-    const productoCompleto = { ...datosForm, imagen: urlImagen };
+    const productoCompleto = {
+      ...datosForm,
+      ...(urlImagen ? { imagen: urlImagen } : {}),
+    };
 
     try {
       const db = getFirestore();
       const productosCollection = collection(db, "productos");
-      await addDoc(productosCollection, productoCompleto);
+      const rta = await addDoc(productosCollection, productoCompleto);
+      console.log("rta: ", rta);
       toast.success("Producto agregado con éxito.");
+      setProductos((prevProductos) => [
+        ...prevProductos,
+        { ...productoCompleto, id: rta._key.path.segments[1] },
+      ]);
       setDatosForm({
         nombre: "",
         precio: "",
@@ -57,18 +99,76 @@ const FormularioContainer = () => {
     } finally {
       setLoading(false);
     }
-    console.log("Producto listo para enviar:", productoCompleto);
+  };
+
+  const manejarEliminarProducto = async (productoId) => {
+    const confirmacion = window.confirm(
+      "¿Estás seguro de que deseas eliminar este producto?",
+    );
+    if (!confirmacion) {
+      return;
+    }
+    try {
+      const db = getFirestore();
+      const productoDoc = doc(db, "productos", productoId);
+      await deleteDoc(productoDoc);
+      toast.success("Producto eliminado con éxito.");
+      setProductos((prevProductos) =>
+        prevProductos.filter((producto) => producto.id !== productoId),
+      );
+    } catch (error) {
+      console.error("Error al eliminar el producto de Firestore:", error);
+      toast.error("Error al eliminar el producto. Intenta nuevamente.");
+    }
   };
 
   return (
-    <AddProductForm
-      manejarEnvio={manejarEnvio}
-      manejarCambio={manejarCambio}
-      setImagenFile={setImagenFile}
-      imagenFile={imagenFile}
-      datosForm={datosForm}
-      loadingImg={loading}
-    />
+    <div className={styles.formularioContainer_container}>
+      <h2 className={"title"} style={{ width: "fit-content" }}>
+        Gestión de Productos
+      </h2>
+      <AddProductForm
+        manejarEnvio={manejarEnvio}
+        manejarCambio={manejarCambio}
+        setImagenFile={setImagenFile}
+        imagenFile={imagenFile}
+        datosForm={datosForm}
+        loadingImg={loading}
+      />
+      <hr />
+      <h3>Lista de Productos</h3>
+      <ul className={styles.productList}>
+        {productos.map((producto) => (
+          <li key={producto.id} className={styles.productItem}>
+            <div className={styles.productDetails}>
+              <img
+                src={producto.imagen}
+                alt={producto.nombre}
+                className={styles.productImage}
+              />
+              <span className={styles.productName}>{producto.nombre}</span>
+              <span className={styles.productPrice}>
+                ${formatearPrecio(producto.precio)}
+              </span>
+              <span className={styles.productStock}>
+                Stock: {producto.stock}
+              </span>
+            </div>
+            <div className={styles.productActions}>
+              <button className={styles.editBtn}>
+                <i className="bi bi-pencil"></i>
+              </button>
+              <button
+                className={styles.removeBtn}
+                onClick={() => manejarEliminarProducto(producto.id)}
+              >
+                <i className="bi bi-trash"></i>
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

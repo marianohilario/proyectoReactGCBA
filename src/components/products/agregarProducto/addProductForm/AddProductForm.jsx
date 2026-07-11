@@ -57,7 +57,7 @@ const AddProductForm = ({
             id="inputImagen"
             className={styles.fileInputHidden}
             type="file"
-            name="urlImagen"
+            name="imagen"
             accept="image/*"
             onChange={(e) => setImagenFile(e.target.files[0])}
           />

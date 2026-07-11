@@ -6,6 +6,8 @@ import styles from "./products.module.css";
 import { useCartContext } from "../../context/CartContext";
 import QuantityStepper from "../quantityStepper/QuantityStepper";
 import { formatearPrecio } from "../../utils/formatearPrecio";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase/config";
 
 const ProductoDetalle = () => {
   const { id } = useParams();
@@ -16,21 +18,23 @@ const ProductoDetalle = () => {
   const { addToCart, getCantidadActual } = useCartContext();
 
   useEffect(() => {
-    setLoading(true);
-    fetch("/data/products.json")
-      .then((response) => response.json())
-      .then((data) => {
-        const encontrado = data.productos.find(
-          (item) => item.id === Number(id),
-        );
-        setProducto(encontrado ?? null);
-      })
-      .catch((error) => {
+    const fetchProducto = async () => {
+      setLoading(true);
+      try {
+        const response = await getDoc(doc(db, "productos", id));
+        if (response.exists()) {
+          setProducto({ id: response.id, ...response.data() });
+        } else {
+          setProducto(null);
+        }
+      } catch (error) {
         console.log(error);
-      })
-      .finally(() => {
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchProducto();
   }, [id]);
 
   useEffect(() => {
@@ -64,7 +68,9 @@ const ProductoDetalle = () => {
     evento.stopPropagation();
     addToCart(producto, cantidad);
     toast.success(
-      itemEnCarrito > 0 ? "Cantidad actualizada" : "Producto agregado al carrito",
+      itemEnCarrito > 0
+        ? "Cantidad actualizada"
+        : "Producto agregado al carrito",
     );
   };
 

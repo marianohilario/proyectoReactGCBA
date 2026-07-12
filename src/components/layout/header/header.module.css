@@ -4,6 +4,7 @@
   z-index: 100;
   display: flex;
   justify-content: flex-end;
+  gap: 1.25rem;
   align-items: center;
   padding: 1rem 1.5rem;
   background-color: #1c1c1e;

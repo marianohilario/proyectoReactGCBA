@@ -7,6 +7,7 @@ import {
   getDocs,
   deleteDoc,
   doc,
+  updateDoc,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../../../../firebase/config";
@@ -14,16 +15,27 @@ import { db } from "../../../../firebase/config";
 import styles from "./formularioContainer.module.css";
 import { formatearPrecio } from "../../../../utils/formatearPrecio";
 
+const estadoInicialFormulario = {
+  nombre: "",
+  precio: "",
+  stock: 0,
+  imagen: "",
+};
+
 const FormularioContainer = () => {
   const [loading, setLoading] = useState(false);
-  const [datosForm, setDatosForm] = useState({
-    nombre: "",
-    precio: "",
-    stock: 0,
-    imagen: "",
-  });
+  const [datosForm, setDatosForm] = useState(estadoInicialFormulario);
   const [imagenFile, setImagenFile] = useState(null);
   const [productos, setProductos] = useState([]);
+  const [productoAEditar, setProductoAEditar] = useState(null);
+
+  useEffect(() => {
+    if (productoAEditar) {
+      setDatosForm(productoAEditar);
+    } else {
+      setDatosForm(estadoInicialFormulario);
+    }
+  }, [productoAEditar]);
 
   useEffect(() => {
     const fetchProductos = async () => {
@@ -53,9 +65,18 @@ const FormularioContainer = () => {
 
   const manejarEnvio = async (evento) => {
     evento.preventDefault();
+    if (datosForm.nombre.trim() === "" || datosForm.precio <= 0) {
+      toast.error(
+        "Por favor, complete todos los campos y asegúrese de que el precio sea mayor a cero.",
+      );
+      return;
+    }
     setLoading(true);
     let urlImagen;
-    if (imagenFile) {
+    const sameImage = productos.find(
+      (producto) => producto.imagen === datosForm.imagen,
+    );
+    if (imagenFile && !sameImage) {
       const apiKey = "fc5635c0f14bcd56f76fd0b365845ad4";
       const formData = new FormData();
       formData.append("image", imagenFile);
@@ -79,13 +100,27 @@ const FormularioContainer = () => {
     try {
       const db = getFirestore();
       const productosCollection = collection(db, "productos");
-      const rta = await addDoc(productosCollection, productoCompleto);
-      console.log("rta: ", rta);
-      toast.success("Producto agregado con éxito.");
-      setProductos((prevProductos) => [
-        ...prevProductos,
-        { ...productoCompleto, id: rta._key.path.segments[1] },
-      ]);
+      if (productoAEditar) {
+        const productoDoc = doc(db, "productos", productoAEditar.id);
+        await updateDoc(productoDoc, productoCompleto);
+        toast.success("Producto editado con éxito.");
+        setProductos((prevProductos) =>
+          prevProductos.map((producto) =>
+            producto.id === productoAEditar.id
+              ? { ...producto, ...productoCompleto }
+              : producto,
+          ),
+        );
+        setProductoAEditar(null);
+      } else {
+        const rta = await addDoc(productosCollection, productoCompleto);
+        console.log("rta: ", rta);
+        toast.success("Producto agregado con éxito.");
+        setProductos((prevProductos) => [
+          ...prevProductos,
+          { ...productoCompleto, id: rta._key.path.segments[1] },
+        ]);
+      }
       setDatosForm({
         nombre: "",
         precio: "",
@@ -122,6 +157,14 @@ const FormularioContainer = () => {
     }
   };
 
+  const manejarEditarProducto = (producto) => {
+    setProductoAEditar(producto);
+  };
+
+  const cancelarEdicion = () => {
+    setProductoAEditar(null);
+  };
+
   return (
     <div className={styles.formularioContainer_container}>
       <h2 className={"title"} style={{ width: "fit-content" }}>
@@ -134,6 +177,8 @@ const FormularioContainer = () => {
         imagenFile={imagenFile}
         datosForm={datosForm}
         loadingImg={loading}
+        cancelarEdicion={cancelarEdicion}
+        productoAEditar={!!productoAEditar}
       />
       <hr />
       <h3>Lista de Productos</h3>
@@ -155,7 +200,10 @@ const FormularioContainer = () => {
               </span>
             </div>
             <div className={styles.productActions}>
-              <button className={styles.editBtn}>
+              <button
+                className={styles.editBtn}
+                onClick={() => manejarEditarProducto(producto)}
+              >
                 <i className="bi bi-pencil"></i>
               </button>
               <button

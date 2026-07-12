@@ -1,67 +1,112 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import styles from "./login.module.css";
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [revealPassword, setRevealPassword] = useState(false);
+  const [emailError, setEmailError] = useState(false);
   const navigate = useNavigate();
+
+  const manejarCambioEmail = (e) => {
+    setEmail(e.target.value);
+    if (emailError) setEmailError(false);
+  };
+
+  const manejarBlurEmail = () => {
+    if (email && !EMAIL_REGEX.test(email)) {
+      setEmailError(true);
+      toast.error("Ingresá un email válido");
+    } else {
+      setEmailError(false);
+    }
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
+
+    if (!EMAIL_REGEX.test(email)) {
+      setEmailError(true);
+      toast.error("Ingresá un email válido");
+      return;
+    }
+
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
+      .then(() => {
         toast.success("¡Inicio de sesión exitoso!");
         navigate("/");
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        toast.error(`Error en el login`);
+      .catch(() => {
+        toast.error("Error en el login");
       });
   };
 
+  const disabledSubmit = !email || !password || emailError;
+
   return (
-    <div>
-      <h2>Iniciar sesión</h2>
-
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            placeholder="Ingrese su email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+    <div className={styles.container}>
+      <form className={styles.formCard} onSubmit={handleLogin}>
+        <div className={styles.formHeader}>
+          <h3 className={styles.formTitle}>Iniciar sesión</h3>
         </div>
+        <div className={styles.formBody}>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Email</label>
+            <input
+              className={`${styles.input} ${emailError ? styles.inputError : ""}`}
+              type="email"
+              placeholder="Ingrese su email"
+              value={email}
+              onChange={manejarCambioEmail}
+              onBlur={manejarBlurEmail}
+              required
+            />
+          </div>
 
-        <div>
-          <label>Contraseña:</label>
-          <input
-            type={revealPassword ? "text" : "password"}
-            placeholder="Ingrese su contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Contraseña</label>
+            <div className={styles.passwordWrapper}>
+              <input
+                className={styles.input}
+                type={revealPassword ? "text" : "password"}
+                placeholder="Ingrese su contraseña"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                className={styles.togglePasswordBtn}
+                onClick={() => setRevealPassword(!revealPassword)}
+                aria-label={
+                  revealPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                }
+              >
+                {revealPassword ? (
+                  <i className="bi bi-eye-slash"></i>
+                ) : (
+                  <i className="bi bi-eye"></i>
+                )}
+              </button>
+            </div>
+          </div>
+
           <button
-            type="button"
-            onClick={() => setRevealPassword(!revealPassword)}
+            className={
+              styles.submitBtn + (disabledSubmit ? " " + styles.disabled : "")
+            }
+            type="submit"
+            disabled={disabledSubmit}
           >
-            {revealPassword ? (
-              <i className="bi bi-eye-slash"></i>
-            ) : (
-              <i className="bi bi-eye"></i>
-            )}
+            Iniciar sesión
           </button>
         </div>
-
-        <button type="submit">Iniciar sesión</button>
       </form>
     </div>
   );

@@ -1,17 +1,50 @@
-# React + Vite
+# MH Ecommerce
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Proyecto final del curso de React (GCBA). Es una tienda online construida con React y Vite, con catálogo de productos, carrito de compras persistente, autenticación de usuarios y un panel de gestión de productos, todo conectado a Firebase (Firestore + Authentication).
 
-Currently, two official plugins are available:
+## Tecnologías
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- [React 19](https://react.dev/) + [Vite](https://vitejs.dev/)
+- [React Router DOM](https://reactrouter.com/) para el ruteo
+- [Firebase](https://firebase.google.com/) (Firestore y Authentication)
+- [React Toastify](https://fkhadra.github.io/react-toastify/) para notificaciones
+- [Bootstrap Icons](https://icons.getbootstrap.com/)
 
-## React Compiler
+## Requisitos previos
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [Node.js](https://nodejs.org/) 20 o superior
+- npm (se instala junto con Node.js)
 
-## Expanding the ESLint configuration
+## Instalación
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# proyectoReactGCBA
+1. Cloná el repositorio:
+
+   ```bash
+   git clone <url-del-repositorio>
+   cd Proyecto_Final
+   ```
+
+2. Instalá las dependencias:
+
+   ```bash
+   npm install
+   ```
+
+## Ejecutar en desarrollo
+
+```bash
+npm run dev
+```
+
+Esto levanta el servidor de desarrollo de Vite (con hot reload) en [http://localhost:5173](http://localhost:5173).
+
+> **Nota sobre Firebase:** la configuración de Firebase (`src/firebase/config.js`) ya apunta a un proyecto existente, así que no hace falta ninguna variable de entorno ni configuración adicional para levantar el proyecto localmente. Si querés conectarlo a tu propio proyecto de Firebase, reemplazá los valores de `firebaseConfig` en ese archivo por los de tu propia app.
+
+## Otros scripts disponibles
+
+| Comando           | Descripción                                                   |
+| ------------------ | -------------------------------------------------------------- |
+| `npm run dev`      | Levanta el servidor de desarrollo con hot reload.               |
+| `npm run build`    | Genera el build de producción en `dist/`.                       |
+| `npm run preview`  | Sirve localmente el build de producción para previsualizarlo.   |
+| `npm run lint`     | Corre ESLint sobre todo el proyecto.                             |

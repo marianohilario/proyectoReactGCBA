@@ -8,6 +8,7 @@ import ProductoDetalle from "./components/products/ProductoDetalle";
 import Cart from "./components/cart/Cart";
 import Login from "./components/login/Login";
 import Register from "./register/Register";
+import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 
 function App() {
   return (
@@ -16,7 +17,14 @@ function App() {
         <Route path="/" element={<Inicio />} />
         <Route path="/producto/:id" element={<ProductoDetalle />} />
         <Route path="/productos" element={<Productos />} />
-        <Route path="/nuevo-producto" element={<NuevoProducto />} />
+        <Route
+          path="/nuevo-producto"
+          element={
+            <ProtectedRoute rolesPermitidos={["admin"]}>
+              <NuevoProducto />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/nosotros" element={<Nosotros />} />
         <Route path="/carrito" element={<Cart />} />
         <Route path="/login" element={<Login />} />

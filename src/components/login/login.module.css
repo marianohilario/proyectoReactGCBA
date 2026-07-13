@@ -171,6 +171,13 @@
   box-shadow: 0 4px 14px rgba(28, 28, 30, 0.25);
 }
 
+.link {
+  color: #c9a43a;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
 @media (min-width: 768px) {
   .formCard {
     width: 440px;

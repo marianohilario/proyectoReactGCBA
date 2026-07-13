@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import styles from "./login.module.css";
@@ -106,6 +106,13 @@ const Login = () => {
           >
             Iniciar sesión
           </button>
+
+          <p className={styles.text}>
+            ¿No tienes una cuenta?{" "}
+            <Link to="/register" className={styles.link}>
+              Registrate
+            </Link>
+          </p>
         </div>
       </form>
     </div>

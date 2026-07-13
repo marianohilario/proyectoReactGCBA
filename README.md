@@ -1,6 +1,6 @@
 # MH Ecommerce
 
-Proyecto final del curso de React (GCBA). Es una tienda online construida con React y Vite, con catálogo de productos, carrito de compras persistente, autenticación de usuarios y un panel de gestión de productos, todo conectado a Firebase (Firestore + Authentication).
+Proyecto final del curso de React (GCBA). Es una tienda online construida con React y Vite, con catálogo de productos, carrito de compras persistente, autenticación de usuarios y un panel de gestión (productos y cupones de descuento), todo conectado a Firebase (Firestore + Authentication).
 
 ## Tecnologías
 

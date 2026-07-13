@@ -1,0 +1,86 @@
+.cuponForm {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-size: 0.9rem;
+  color: #1a1a2e;
+  background: #fafafa;
+  outline: none;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: #aaa;
+}
+
+.input:focus {
+  border-color: #c9a43a;
+  box-shadow: 0 0 0 3px rgba(201, 164, 58, 0.15);
+  background: #fff;
+}
+
+.applyBtn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px;
+  background: #1c1c1e;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.25s ease;
+  flex-shrink: 0;
+}
+
+.applyBtn:hover:not(:disabled) {
+  background: #2d2d2f;
+}
+
+.applyBtn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+.cuponAplicado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.cuponInfo {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #c9a43a;
+}
+
+.removeBtn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #c0392b;
+  font-size: 1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.removeBtn:hover {
+  background: rgba(192, 57, 43, 0.1);
+}

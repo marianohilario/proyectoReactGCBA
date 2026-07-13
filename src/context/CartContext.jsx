@@ -1,4 +1,6 @@
 import { useState, useContext, createContext, useEffect } from "react";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../firebase/config";
 import { useAuth } from "./AuthContext";
 
 const CartContext = createContext();
@@ -27,6 +29,8 @@ export const CartProvider = ({ children }) => {
   const { user } = useAuth();
   const cartKey = getCartStorageKey(user);
   const [cartItems, setCartItems] = useState(() => getStoredCartItems(cartKey));
+  const [cuponAplicado, setCuponAplicado] = useState(null);
+  const [aplicandoCupon, setAplicandoCupon] = useState(false);
 
   useEffect(() => {
     setCartItems(getStoredCartItems(cartKey));
@@ -35,6 +39,12 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem(cartKey, JSON.stringify(cartItems));
   }, [cartItems]);
+
+  useEffect(() => {
+    if (cartItems.length === 0 && cuponAplicado) {
+      setCuponAplicado(null);
+    }
+  }, [cartItems, cuponAplicado]);
 
   const addToCart = (product, quantity) => {
     const existingItem = cartItems.find(
@@ -84,6 +94,36 @@ export const CartProvider = ({ children }) => {
     return item ? item.quantity : 0;
   };
 
+  const aplicarCupon = async (codigo) => {
+    setAplicandoCupon(true);
+    try {
+      const cuponesCollection = collection(db, "cupones");
+      const cuponQuery = query(cuponesCollection, where("codigo", "==", codigo));
+      const snapshot = await getDocs(cuponQuery);
+      if (snapshot.empty) {
+        return { exito: false };
+      }
+      const cuponDoc = snapshot.docs[0];
+      const cupon = { id: cuponDoc.id, ...cuponDoc.data() };
+      setCuponAplicado(cupon);
+      return { exito: true, cupon };
+    } finally {
+      setAplicandoCupon(false);
+    }
+  };
+
+  const quitarCupon = () => {
+    setCuponAplicado(null);
+  };
+
+  const getDescuento = () => {
+    return (getTotalPrice() * (cuponAplicado?.descuento ?? 0)) / 100;
+  };
+
+  const getTotalConDescuento = () => {
+    return getTotalPrice() - getDescuento();
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -95,6 +135,12 @@ export const CartProvider = ({ children }) => {
         getTotalItems,
         getTotalPrice,
         getCantidadActual,
+        cuponAplicado,
+        aplicandoCupon,
+        aplicarCupon,
+        quitarCupon,
+        getDescuento,
+        getTotalConDescuento,
       }}
     >
       {children}

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useCartContext } from "../../context/CartContext";
 import QuantityStepper from "../quantityStepper/QuantityStepper";
+import CuponCarrito from "./CuponCarrito";
 import { formatearPrecio } from "../../utils/formatearPrecio";
 import styles from "./cart.module.css";
 
@@ -12,6 +13,9 @@ const Cart = () => {
     removeFromCart,
     clearCart,
     getTotalPrice,
+    cuponAplicado,
+    getDescuento,
+    getTotalConDescuento,
   } = useCartContext();
 
   const manejarVaciarCarrito = () => {
@@ -97,13 +101,33 @@ const Cart = () => {
       </div>
 
       <div className={styles.summary}>
-        <p className={styles.totalPrice}>
-          Total: ${formatearPrecio(getTotalPrice())}
-        </p>
+        <CuponCarrito />
+
+        {cuponAplicado ? (
+          <div className={styles.totalsBreakdown}>
+            <p className={styles.subtotalLine}>
+              <span>Subtotal</span>
+              <span>${formatearPrecio(getTotalPrice())}</span>
+            </p>
+            <p className={styles.discountLine}>
+              <span>Descuento</span>
+              <span>-${formatearPrecio(getDescuento())}</span>
+            </p>
+            <p className={styles.totalPrice}>
+              Total: ${formatearPrecio(getTotalConDescuento())}
+            </p>
+          </div>
+        ) : (
+          <p className={styles.totalPrice}>
+            Total: ${formatearPrecio(getTotalPrice())}
+          </p>
+        )}
+
         <Link
           to="/"
           onClick={manejarFinalizarCompra}
           className={styles.clearBtn}
+          style={{ alignSelf: "flex-end", width: "fit-content" }}
         >
           Finalizar Compra
         </Link>

@@ -9,6 +9,11 @@ const ProductsListContainer = ({ titulo, destacados }) => {
   const [products, setProducts] = useState([]);
   const [productosAMostrar, setProductosAMostrar] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const productosFiltrados = productosAMostrar.filter((producto) =>
+    producto.nombre.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -47,8 +52,17 @@ const ProductsListContainer = ({ titulo, destacados }) => {
     </div>
   ) : (
     <div className={styles.container}>
-      {/* <h2 className={"title"}>{titulo}</h2> */}
-      <ProductList products={productosAMostrar} />
+      <div className={styles.searchWrapper}>
+        <i className={`bi bi-search ${styles.searchIcon}`}></i>
+        <input
+          type="text"
+          placeholder="Buscar producto..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className={styles.searchInput}
+        />
+      </div>
+      <ProductList products={productosFiltrados} />
     </div>
   );
 };

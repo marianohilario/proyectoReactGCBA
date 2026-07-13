@@ -225,6 +225,48 @@
   gap: 40px;
 }
 
+/* ── Buscador ── */
+.searchWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  color: #aaa;
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-size: 0.9rem;
+  color: #1a1a2e;
+  background: #fafafa;
+  outline: none;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+  box-sizing: border-box;
+}
+
+.searchInput::placeholder {
+  color: #aaa;
+}
+
+.searchInput:focus {
+  border-color: #c9a43a;
+  box-shadow: 0 0 0 3px rgba(201, 164, 58, 0.15);
+  background: #fff;
+}
+
 /* ── Detalle de producto ── */
 .detalleCard {
   width: 100%;

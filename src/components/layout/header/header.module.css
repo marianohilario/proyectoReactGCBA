@@ -10,3 +10,25 @@
   background-color: #1c1c1e;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
+
+.authLinks {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.authLink {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: color 0.25s ease;
+}
+
+.authLink:hover {
+  color: #c9a43a;
+}
+
+.active {
+  color: #c9a43a;
+}

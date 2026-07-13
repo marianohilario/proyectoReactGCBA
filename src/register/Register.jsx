@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import ConfirmModal from "../components/confirmModal/ConfirmModal";
 import styles from "./register.module.css";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -12,6 +13,7 @@ const Register = () => {
   const [revealPassword, setRevealPassword] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [error, setError] = useState(null);
+  const [showEmailExistsModal, setShowEmailExistsModal] = useState(false);
   const navigate = useNavigate();
   const auth = getAuth();
 
@@ -45,14 +47,7 @@ const Register = () => {
       toast.success("Usuario registrado con éxito");
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
-        const quieresIngresar = window.confirm(
-          "El correo electrónico ya se encuentra registrado. ¿Quieres intentar iniciar sesión?",
-        );
-        if (quieresIngresar) {
-          navigate("/login");
-        } else {
-          navigate("/");
-        }
+        setShowEmailExistsModal(true);
       } else {
         setError(
           "Ocurrió un error al registrar el usuario. Verifique los datos e intente nuevamente.",
@@ -128,6 +123,21 @@ const Register = () => {
           </button>
         </div>
       </form>
+      <ConfirmModal
+        open={showEmailExistsModal}
+        title="Cuenta existente"
+        message="El correo electrónico ya se encuentra registrado. ¿Querés intentar iniciar sesión?"
+        confirmText="Iniciar sesión"
+        cancelText="Cancelar"
+        onConfirm={() => {
+          setShowEmailExistsModal(false);
+          navigate("/login");
+        }}
+        onCancel={() => {
+          setShowEmailExistsModal(false);
+          navigate("/");
+        }}
+      />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import AddProductForm from "../addProductForm/AddProductForm";
+import ConfirmModal from "../../../confirmModal/ConfirmModal";
 import {
   getFirestore,
   collection,
@@ -29,6 +30,7 @@ const FormularioContainer = () => {
   const [imagenFile, setImagenFile] = useState(null);
   const [productos, setProductos] = useState([]);
   const [productoAEditar, setProductoAEditar] = useState(null);
+  const [productoAEliminar, setProductoAEliminar] = useState(null);
 
   useEffect(() => {
     if (productoAEditar) {
@@ -133,13 +135,13 @@ const FormularioContainer = () => {
     }
   };
 
-  const manejarEliminarProducto = async (productoId) => {
-    const confirmacion = window.confirm(
-      "¿Estás seguro de que deseas eliminar este producto?",
-    );
-    if (!confirmacion) {
-      return;
-    }
+  const manejarEliminarProducto = (productoId) => {
+    setProductoAEliminar(productoId);
+  };
+
+  const confirmarEliminarProducto = async () => {
+    const productoId = productoAEliminar;
+    setProductoAEliminar(null);
     try {
       const db = getFirestore();
       const productoDoc = doc(db, "productos", productoId);
@@ -213,6 +215,16 @@ const FormularioContainer = () => {
           </li>
         ))}
       </ul>
+      <ConfirmModal
+        open={!!productoAEliminar}
+        title="Eliminar producto"
+        message="¿Estás seguro de que deseas eliminar este producto?"
+        confirmText="Eliminar"
+        cancelText="Cancelar"
+        danger
+        onConfirm={confirmarEliminarProducto}
+        onCancel={() => setProductoAEliminar(null)}
+      />
     </div>
   );
 };

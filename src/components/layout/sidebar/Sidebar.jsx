@@ -35,9 +35,9 @@ const Sidebar = ({ isOpen, onClose }) => {
               </Link>
             </li>
             {user && user.rol === "admin" && (
-              <li className={linkClass("/gestion-productos")}>
-                <Link to="/gestion-productos" onClick={onClose}>
-                  Gestión Productos
+              <li className={linkClass("/gestion")}>
+                <Link to="/gestion" onClick={onClose}>
+                  Gestión
                 </Link>
               </li>
             )}

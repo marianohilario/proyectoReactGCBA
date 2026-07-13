@@ -166,9 +166,6 @@ const FormularioContainer = () => {
 
   return (
     <div className={styles.formularioContainer_container}>
-      <h2 className={"title"} style={{ width: "fit-content" }}>
-        Gestión de Productos
-      </h2>
       <AddProductForm
         manejarEnvio={manejarEnvio}
         manejarCambio={manejarCambio}

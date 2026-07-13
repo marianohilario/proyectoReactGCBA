@@ -1,7 +1,7 @@
 import FormularioContainer from "../components/products/agregarProducto/formularioContainer/FormularioContainer";
 
-const NuevoProducto = () => {
+const GestionProducto = () => {
   return <FormularioContainer />;
 };
 
-export default NuevoProducto;
+export default GestionProducto;

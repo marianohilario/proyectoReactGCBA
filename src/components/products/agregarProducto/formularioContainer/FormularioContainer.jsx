@@ -20,6 +20,7 @@ const estadoInicialFormulario = {
   precio: "",
   stock: 0,
   imagen: "",
+  destacado: false,
 };
 
 const FormularioContainer = () => {
@@ -57,9 +58,10 @@ const FormularioContainer = () => {
   }, []);
 
   const manejarCambio = (evento) => {
+    const { name, value, type, checked } = evento.target;
     setDatosForm({
       ...datosForm,
-      [evento.target.name]: evento.target.value,
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
@@ -121,12 +123,7 @@ const FormularioContainer = () => {
           { ...productoCompleto, id: rta._key.path.segments[1] },
         ]);
       }
-      setDatosForm({
-        nombre: "",
-        precio: "",
-        stock: 0,
-        imagen: "",
-      });
+      setDatosForm(estadoInicialFormulario);
       setImagenFile(null);
     } catch (error) {
       console.error("Error al agregar el producto a Firestore:", error);

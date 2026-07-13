@@ -73,6 +73,18 @@ const AddProductForm = ({
             onChange={manejarCambio}
           />
         </div>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Destacado</label>
+          <label className={styles.switch}>
+            <input
+              type="checkbox"
+              name="destacado"
+              checked={!!datosForm.destacado}
+              onChange={manejarCambio}
+            />
+            <span className={styles.switchSlider}></span>
+          </label>
+        </div>
         <div className={`${styles.formGroup} ${styles.imageFormGroup}`}>
           <label className={styles.label}>Imagen</label>
           <label htmlFor="inputImagen" className={styles.imagePreview}>

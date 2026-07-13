@@ -5,7 +5,8 @@ import User from "../../user/User";
 import styles from "./header.module.css";
 
 const Header = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  console.log("Header user:", user);
 
   return (
     <header className={styles.header}>

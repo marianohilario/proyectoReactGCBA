@@ -1,9 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import styles from "./sidebar.module.css";
 import SocialNetworks from "../../socialNetworks/SocialNetworks";
+import { useAuth } from "../../../context/AuthContext";
 
 const Sidebar = () => {
   const { pathname } = useLocation();
+  const { user } = useAuth();
 
   const linkClass = (path) =>
     `${styles.navLink} ${pathname === path ? styles.active : ""}`;
@@ -23,9 +25,11 @@ const Sidebar = () => {
           <li className={linkClass("/productos")}>
             <Link to="/productos">Productos</Link>
           </li>
-          <li className={linkClass("/nuevo-producto")}>
-            <Link to="/nuevo-producto">Gestión Productos</Link>
-          </li>
+          {user && user.rol === "admin" && (
+            <li className={linkClass("/nuevo-producto")}>
+              <Link to="/nuevo-producto">Gestión Productos</Link>
+            </li>
+          )}
           <li className={linkClass("/nosotros")}>
             <Link to="/nosotros">Nosotros</Link>
           </li>

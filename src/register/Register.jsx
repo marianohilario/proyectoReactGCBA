@@ -65,6 +65,8 @@ const Register = () => {
     }
   };
 
+  const disabledSubmit = !email || !password || emailError;
+
   return (
     <div className={styles.container}>
       <form className={styles.formCard} onSubmit={handleSubmit}>
@@ -115,7 +117,13 @@ const Register = () => {
 
           {error && <p className={styles.errorMessage}>{error}</p>}
 
-          <button className={styles.submitBtn} type="submit">
+          <button
+            className={
+              styles.submitBtn + (disabledSubmit ? " " + styles.disabled : "")
+            }
+            type="submit"
+            disabled={disabledSubmit}
+          >
             Registrarse
           </button>
         </div>

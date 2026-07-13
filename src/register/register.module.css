@@ -171,6 +171,13 @@
   box-shadow: 0 2px 8px rgba(28, 28, 30, 0.3);
 }
 
+.submitBtn.disabled {
+  background: #1c1c1e80;
+  color: #ffffff80;
+  cursor: default;
+  box-shadow: 0 4px 14px rgba(28, 28, 30, 0.25);
+}
+
 @media (min-width: 768px) {
   .formCard {
     width: 440px;

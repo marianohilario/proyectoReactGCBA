@@ -32,3 +32,32 @@
 .active {
   color: #c9a43a;
 }
+
+.hamburgerBtn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: #ffffff;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.hamburgerBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #c9a43a;
+}
+
+@media (max-width: 768px) {
+  .hamburgerBtn {
+    display: flex;
+    margin-right: auto;
+  }
+}

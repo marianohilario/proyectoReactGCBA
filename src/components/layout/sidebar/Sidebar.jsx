@@ -3,7 +3,7 @@ import styles from "./sidebar.module.css";
 import SocialNetworks from "../../socialNetworks/SocialNetworks";
 import { useAuth } from "../../../context/AuthContext";
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }) => {
   const { pathname } = useLocation();
   const { user } = useAuth();
 
@@ -11,34 +11,48 @@ const Sidebar = () => {
     `${styles.navLink} ${pathname === path ? styles.active : ""}`;
 
   return (
-    <aside className={styles.sidebar}>
-      <h1 className={styles.brand}>
-        <span className={"title"} style={{ fontSize: "1.3rem" }}>
-          MH Ecommerce
-        </span>
-      </h1>
-      <nav>
-        <ul className={styles.navList}>
-          <li className={linkClass("/")}>
-            <Link to="/">Inicio</Link>
-          </li>
-          <li className={linkClass("/productos")}>
-            <Link to="/productos">Productos</Link>
-          </li>
-          {user && user.rol === "admin" && (
-            <li className={linkClass("/nuevo-producto")}>
-              <Link to="/nuevo-producto">Gestión Productos</Link>
+    <>
+      <div
+        className={`${styles.backdrop} ${isOpen ? styles.backdropVisible : ""}`}
+        onClick={onClose}
+      />
+      <aside className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
+        <h1 className={styles.brand}>
+          <span className={"title"} style={{ fontSize: "1.3rem" }}>
+            MH Ecommerce
+          </span>
+        </h1>
+        <nav>
+          <ul className={styles.navList}>
+            <li className={linkClass("/")}>
+              <Link to="/" onClick={onClose}>
+                Inicio
+              </Link>
             </li>
-          )}
-          <li className={linkClass("/nosotros")}>
-            <Link to="/nosotros">Nosotros</Link>
-          </li>
-        </ul>
-      </nav>
-      <div className={styles.sidebarFooter}>
-        <SocialNetworks />
-      </div>
-    </aside>
+            <li className={linkClass("/productos")}>
+              <Link to="/productos" onClick={onClose}>
+                Productos
+              </Link>
+            </li>
+            {user && user.rol === "admin" && (
+              <li className={linkClass("/nuevo-producto")}>
+                <Link to="/nuevo-producto" onClick={onClose}>
+                  Gestión Productos
+                </Link>
+              </li>
+            )}
+            <li className={linkClass("/nosotros")}>
+              <Link to="/nosotros" onClick={onClose}>
+                Nosotros
+              </Link>
+            </li>
+          </ul>
+        </nav>
+        <div className={styles.sidebarFooter}>
+          <SocialNetworks />
+        </div>
+      </aside>
+    </>
   );
 };
 

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,11 +9,15 @@ import styles from "./Layout.module.css";
 import WhatsApp from "../whatsApp/WhatsApp";
 
 const Layout = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
     <div className={styles.mainLayout}>
-      <Sidebar />
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
       <div className={styles.contentArea}>
-        <Header />
+        <Header
+          onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
+        />
         <main className={styles.mainContainer}>
           <Outlet />
         </main>

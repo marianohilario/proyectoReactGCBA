@@ -5,7 +5,7 @@ import User from "../../user/User";
 import styles from "./header.module.css";
 import { useEffect, useState } from "react";
 
-const Header = () => {
+const Header = ({ onToggleSidebar }) => {
   const { user, logout } = useAuth();
   const location = useLocation();
   const [activeRoute, setActiveRoute] = useState(location.pathname);
@@ -16,6 +16,14 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
+      <button
+        type="button"
+        className={styles.hamburgerBtn}
+        onClick={onToggleSidebar}
+        aria-label="Abrir menú"
+      >
+        <i className="bi bi-list"></i>
+      </button>
       <CartIcon />
       {user ? (
         <User />

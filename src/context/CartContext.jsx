@@ -1,7 +1,9 @@
-import React, { useState, useContext, createContext, useEffect } from "react";
+import { useState, useContext, createContext, useEffect } from "react";
+import { useAuth } from "./AuthContext";
 
 const CartContext = createContext();
-const CART_STORAGE_KEY = "cartItems";
+
+const getCartStorageKey = (user) => `cartItems_${user?.uid ?? "anonymous"}`;
 
 export const useCartContext = () => {
   const context = useContext(CartContext);
@@ -11,9 +13,9 @@ export const useCartContext = () => {
   return context;
 };
 
-const getStoredCartItems = () => {
+const getStoredCartItems = (cartKey) => {
   try {
-    const stored = localStorage.getItem(CART_STORAGE_KEY);
+    const stored = localStorage.getItem(cartKey);
     return stored ? JSON.parse(stored) : [];
   } catch (error) {
     console.log(error);
@@ -22,10 +24,16 @@ const getStoredCartItems = () => {
 };
 
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState(getStoredCartItems);
+  const { user } = useAuth();
+  const cartKey = getCartStorageKey(user);
+  const [cartItems, setCartItems] = useState(() => getStoredCartItems(cartKey));
 
   useEffect(() => {
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
+    setCartItems(getStoredCartItems(cartKey));
+  }, [cartKey]);
+
+  useEffect(() => {
+    localStorage.setItem(cartKey, JSON.stringify(cartItems));
   }, [cartItems]);
 
   const addToCart = (product, quantity) => {
